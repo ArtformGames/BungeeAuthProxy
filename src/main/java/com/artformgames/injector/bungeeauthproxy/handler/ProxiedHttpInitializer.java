@@ -1,6 +1,6 @@
 package com.artformgames.injector.bungeeauthproxy.handler;
 
-import com.artformgames.injector.bungeeauthproxy.conf.Config;
+import com.artformgames.injector.bungeeauthproxy.Config;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelInitializer;
 import io.netty.handler.codec.http.HttpClientCodec;

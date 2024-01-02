@@ -76,7 +76,7 @@ public class InitialHandler extends net.md_5.bungee.connection.InitialHandler im
         this.thisState = InitialHandler.State.FINISHING;
         BungeeAuthProxyInjector.submitRequest(this, encodedHash, this.ch.getHandle().eventLoop(), (result, error) -> {
             if (error == null) {
-                LoginResult obj = (LoginResult) BungeeCord.getInstance().gson.fromJson(result, LoginResult.class);
+                LoginResult obj = BungeeCord.getInstance().gson.fromJson(result, LoginResult.class);
                 if (obj != null && obj.getId() != null) {
                     InitialHandler.this.loginProfile = obj;
                     InitialHandler.this.name = obj.getName();

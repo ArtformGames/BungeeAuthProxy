@@ -14,9 +14,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package com.artformgames.injector.bungeeauthproxy.util;
-
-import com.artformgames.injector.bungeeauthproxy.conf.Config;
+package com.artformgames.injector.bungeeauthproxy;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -29,7 +27,7 @@ public final class Logging {
     private static final Pattern CONTROL_CHARACTERS_FILTER = Pattern.compile("\\p{Cc}&&[^\r\n\t]");
 
     public enum Level {
-        DEBUG, INFO, WARNING, ERROR;
+        DEBUG, INFO, WARNING, ERROR
     }
 
     public static void log(Level level, String message) {

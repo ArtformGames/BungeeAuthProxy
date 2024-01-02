@@ -1,6 +1,6 @@
 package com.artformgames.injector.bungeeauthproxy.handler;
 
-import com.artformgames.injector.bungeeauthproxy.conf.Config;
+import com.artformgames.injector.bungeeauthproxy.Config;
 import com.google.common.base.Preconditions;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;

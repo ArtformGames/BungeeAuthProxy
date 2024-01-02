@@ -1,4 +1,4 @@
-package com.artformgames.injector.bungeeauthproxy.conf;
+package com.artformgames.injector.bungeeauthproxy;
 
 import cc.carm.lib.configuration.core.Configuration;
 import cc.carm.lib.configuration.core.annotation.HeaderComment;

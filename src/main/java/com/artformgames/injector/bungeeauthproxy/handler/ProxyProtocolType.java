@@ -10,7 +10,7 @@ import java.net.InetSocketAddress;
 import java.util.Arrays;
 import java.util.function.Supplier;
 
-import static com.artformgames.injector.bungeeauthproxy.conf.Config.PROXY.*;
+import static com.artformgames.injector.bungeeauthproxy.Config.PROXY.*;
 
 public enum ProxyProtocolType {
 
