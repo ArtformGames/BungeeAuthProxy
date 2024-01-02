@@ -1,6 +1,0 @@
-main: ${project.package}.Main
-name: ${project.name}
-version: ${project.version}
-description: ${project.description}
-
-author: ArtformGames
