@@ -4,7 +4,6 @@ import io.netty.handler.proxy.HttpProxyHandler;
 import io.netty.handler.proxy.ProxyHandler;
 import io.netty.handler.proxy.Socks4ProxyHandler;
 import io.netty.handler.proxy.Socks5ProxyHandler;
-import jline.internal.Nullable;
 
 import java.net.InetSocketAddress;
 import java.util.Arrays;
@@ -38,19 +37,19 @@ public enum ProxyProtocolType {
         return new InetSocketAddress(HOST.getNotNull(), PORT.getNotNull());
     }
 
-    public static @Nullable String getProxyUsername() {
+    public static String getProxyUsername() {
         return AUTH.ENABLED.getNotNull() ? AUTH.USERNAME.getNotNull() : null;
     }
 
-    public static @Nullable String getProxyPassword() {
+    public static String getProxyPassword() {
         return AUTH.ENABLED.getNotNull() ? AUTH.PASSWORD.getNotNull() : null;
     }
 
-    public static @Nullable ProxyProtocolType parse(int id) {
+    public static ProxyProtocolType parse(int id) {
         return Arrays.stream(values()).filter(type -> type.ordinal() == id).findFirst().orElse(null);
     }
 
-    public static @Nullable ProxyProtocolType parse(String name) {
+    public static ProxyProtocolType parse(String name) {
         return Arrays.stream(values()).filter(type -> type.name().equalsIgnoreCase(name)).findFirst().orElse(null);
     }
 

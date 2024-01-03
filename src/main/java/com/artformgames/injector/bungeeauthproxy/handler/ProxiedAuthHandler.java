@@ -9,7 +9,6 @@ import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.EventLoop;
 import io.netty.handler.codec.http.*;
-import jline.internal.Nullable;
 import net.md_5.bungee.api.Callback;
 import net.md_5.bungee.http.HttpInitializer;
 import net.md_5.bungee.netty.PipelineUtils;
@@ -59,7 +58,7 @@ public class ProxiedAuthHandler {
                         request.headers().set(HttpHeaderNames.HOST, uri.getHost());
                         channel.channel().writeAndFlush(request);
                     } else {
-                        addressCache.invalidate(uri.getHost());
+                        if (addressCache != null) addressCache.invalidate(uri.getHost());
                         callback.done(null, channel.cause());
                     }
                 });
@@ -70,7 +69,7 @@ public class ProxiedAuthHandler {
         else return addressCache.get(host, () -> InetAddress.getByName(host));
     }
 
-    public @Nullable ProxyProtocolType getProxyProtocol() {
+    public ProxyProtocolType getProxyProtocol() {
         return ProxyProtocolType.parse(Config.PROXY.PROTOCOL.getNotNull());
     }
 
