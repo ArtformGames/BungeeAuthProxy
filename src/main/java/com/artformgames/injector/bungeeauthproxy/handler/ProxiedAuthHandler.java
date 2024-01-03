@@ -17,6 +17,7 @@ import net.md_5.bungee.netty.PipelineUtils;
 import java.net.InetAddress;
 import java.net.URI;
 import java.net.UnknownHostException;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 import static com.artformgames.injector.bungeeauthproxy.Logging.debug;
@@ -64,15 +65,9 @@ public class ProxiedAuthHandler {
                 });
     }
 
-    private InetAddress resolveAddress(String host) throws UnknownHostException {
+    private InetAddress resolveAddress(String host) throws UnknownHostException, ExecutionException {
         if (this.addressCache == null) return InetAddress.getByName(host);
-
-        InetAddress inetHost = addressCache.getIfPresent(host);
-        if (inetHost == null) {
-            inetHost = InetAddress.getByName(host);
-            addressCache.put(host, inetHost);
-        }
-        return inetHost;
+        else return addressCache.get(host, () -> InetAddress.getByName(host));
     }
 
     public @Nullable ProxyProtocolType getProxyProtocol() {

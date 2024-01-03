@@ -29,8 +29,8 @@ public interface Config extends Configuration {
     @HeaderComment("Proxy server settings")
     interface PROXY extends Configuration {
 
-        @HeaderComment("Proxy protocol, -1 = NO_PROXY ,0 = HTTP/HTTPS, 1 = SOCKS4, 2 = SOCKS5")
-        ConfiguredValue<Integer> PROTOCOL = ConfiguredValue.of(1);
+        @HeaderComment("Proxy protocol, -1 = NO_PROXY, 0 = HTTP/HTTPS, 1 = SOCKS4, 2 = SOCKS5")
+        ConfiguredValue<Integer> PROTOCOL = ConfiguredValue.of(-1);
 
         @HeaderComment("Proxy host")
         ConfiguredValue<String> HOST = ConfiguredValue.of("127.0.0.1");

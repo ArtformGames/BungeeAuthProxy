@@ -1,9 +1,6 @@
 package com.artformgames.injector.bungeeauthproxy.transformer;
 
-import javassist.ClassPool;
-import javassist.CtClass;
-import javassist.CtMethod;
-import javassist.LoaderClassPath;
+import javassist.*;
 
 import java.io.ByteArrayInputStream;
 import java.lang.instrument.ClassFileTransformer;
@@ -31,6 +28,10 @@ public class ProxyHandlerTransformer implements ClassFileTransformer {
             debug("Injecting into " + handleMethod.getLongName());
 
             handleMethod.setBody("{com.artformgames.injector.bungeeauthproxy.BungeeAuthProxyInjector.submitRequest($1, $2, $3);}");
+
+            CtField cacheField = clazz.getField("addressCache");
+            clazz.removeField(cacheField); // remove cache field
+
             return clazz.toBytecode();
         } catch (Exception e) {
             error("Failed to inject handlers into [" + className + "], are you really using BungeeCord?", e);
