@@ -34,6 +34,22 @@ public final class Logging {
         log(level, message, null);
     }
 
+    public static void debug(String message) {
+        log(Level.DEBUG, message);
+    }
+
+    public static void error(String message) {
+        log(Level.ERROR, message);
+    }
+
+    public static void error(String message, Throwable e) {
+        log(Level.ERROR, message, e);
+    }
+
+    public static void warning(String message) {
+        log(Level.WARNING, message);
+    }
+
     public static void log(Level level, String message, Throwable e) {
         if (level == Level.DEBUG && !Config.DEBUG.getNotNull()) return;
 

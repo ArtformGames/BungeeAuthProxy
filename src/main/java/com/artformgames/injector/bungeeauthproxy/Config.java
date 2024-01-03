@@ -15,11 +15,6 @@ public interface Config extends Configuration {
     @HeaderComment("MineCraft service settings")
     interface SERVICE extends Configuration {
 
-        @HeaderComment("The authentication url for minecraft.net")
-        ConfiguredValue<String> MOJANG_AUTH_URL = ConfiguredValue.of(
-                "https://sessionserver.mojang.com/session/minecraft/hasJoined?username=%s&serverId=%s%s"
-        );
-
         @HeaderComment("Timeout duration for single request in milliseconds.")
         ConfiguredValue<Long> TIME_OUT = ConfiguredValue.of(5000L);
 
@@ -34,10 +29,7 @@ public interface Config extends Configuration {
     @HeaderComment("Proxy server settings")
     interface PROXY extends Configuration {
 
-        @HeaderComment("Whether to enable proxy to access the authentication services")
-        ConfiguredValue<Boolean> ENABLE = ConfiguredValue.of(true);
-
-        @HeaderComment("Proxy protocol, 0 = HTTP/HTTPS, 1 = SOCKS4, 2 = SOCKS5")
+        @HeaderComment("Proxy protocol, -1 = NO_PROXY ,0 = HTTP/HTTPS, 1 = SOCKS4, 2 = SOCKS5")
         ConfiguredValue<Integer> PROTOCOL = ConfiguredValue.of(1);
 
         @HeaderComment("Proxy host")
