@@ -20,6 +20,8 @@ which is trying to solve the problem of inability to access the MineCraft online
 
 ## Usage
 
+**Before using this injector, make sure that your Java version is 11 or above.**
+
 1. Download latest release from [here](https://github.com/ArtformGames/BungeeAuthProxy/releases) .
 2. Put the jar file into the folder of your BungeeCord server (same path with server jar).
 3. Add the `-javaagent:BungeeAuthProxy.jar[=<CONFIG-FILE-NAME>]` before `-jar <server-jar>.jar` to the start command of

@@ -20,6 +20,8 @@ BungeeCord 服务器的身份验证代理注入器，
 
 ## 用法
 
+**在使用此注入器之前，请确保您的 Java 版本为 11 或更高版本。**
+
 1. [在这里](https://github.com/ArtformGames/BungeeAuthProxy/releases)下载最新版本的注入器包。
 2. 将 jar 文件放入 BungeeCord 服务器的文件夹中（与服务器jar在同一个文件夹）。
 3. 在开服命令的 `-jar <server-jar>.jar` 前添加 `-javaagent:BungeeAuthProxy.jar[=<CONFIG-FILE-NAME>]`。
