@@ -59,6 +59,11 @@ proxy:
     enabled: false
     username: proxy-username
     password: proxy-password
+
+advance:
+   # Remove unused field after injection.
+   # If any 'NoSuchFieldException' or 'IllegalAccessException' occurred, try to set this to false.
+   remove-unused-field: true
 ```
 
 ## Open Source Licence

@@ -60,6 +60,11 @@ proxy:
     enabled: false
     username: proxy-username
     password: proxy-password
+
+advance:
+   # 注入成功后去除未使用的常量，以释放内存。
+   # 如果出现了类似 'NoSuchFieldException' 或 'IllegalAccessException' 的报错，请将此设为“false”。
+   remove-unused-field: true
 ```
 
 ## 开源协议
