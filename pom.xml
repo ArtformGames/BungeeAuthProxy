@@ -16,7 +16,7 @@
     </properties>
     <groupId>com.artformgames</groupId>
     <artifactId>bungeeauthproxy</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.3</version>
 
     <name>BungeeAuthProxy</name>
     <url>https://github.com/ArtformGames/BungeeAuthProxy</url>
