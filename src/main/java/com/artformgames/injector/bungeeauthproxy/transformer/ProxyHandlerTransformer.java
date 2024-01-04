@@ -29,8 +29,14 @@ public class ProxyHandlerTransformer implements ClassFileTransformer {
 
             handleMethod.setBody("{com.artformgames.injector.bungeeauthproxy.BungeeAuthProxyInjector.submitRequest($1, $2, $3);}");
 
+            // remove unused static initializer
+            CtConstructor staticBlock = clazz.getClassInitializer();
+            if (staticBlock != null) clazz.removeConstructor(staticBlock);
+
+            // remove unused cache field
             CtField cacheField = clazz.getField("addressCache");
-            clazz.removeField(cacheField); // remove cache field
+            clazz.removeField(cacheField);
+
 
             return clazz.toBytecode();
         } catch (Exception e) {

@@ -10,6 +10,7 @@ import cc.carm.lib.configuration.core.value.type.ConfiguredValue;
 })
 public interface Config extends Configuration {
 
+    @HeaderComment("Debug mode for developers, with more detailed logs.")
     ConfiguredValue<Boolean> DEBUG = ConfiguredValue.of(false);
 
     @HeaderComment("MineCraft service settings")
@@ -38,10 +39,12 @@ public interface Config extends Configuration {
         @HeaderComment("Proxy port")
         ConfiguredValue<Integer> PORT = ConfiguredValue.of(7890);
 
-        @HeaderComment("Proxy authentication settings")
+        @HeaderComment({
+                "Proxy authentication settings",
+                "If proxy authentication is not required, set 'enabled' to false."
+        })
         interface AUTH extends Configuration {
 
-            @HeaderComment("Whether to enable proxy authentication")
             ConfiguredValue<Boolean> ENABLED = ConfiguredValue.of(false);
 
             ConfiguredValue<String> USERNAME = ConfiguredValue.of("proxy-username");
