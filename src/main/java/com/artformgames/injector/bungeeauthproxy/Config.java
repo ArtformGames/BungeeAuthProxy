@@ -3,12 +3,25 @@ package com.artformgames.injector.bungeeauthproxy;
 import cc.carm.lib.configuration.core.Configuration;
 import cc.carm.lib.configuration.core.annotation.HeaderComment;
 import cc.carm.lib.configuration.core.value.type.ConfiguredValue;
+import com.artformgames.injector.bungeeauthproxy.channel.ProxyProtocolType;
 
 @HeaderComment({
         "BungeeAuthProxy injector configurations",
         "See https://github.com/ArtformGames/BungeeAuthProxy for more information."
 })
 public interface Config extends Configuration {
+
+    static ProxyProtocolType getProxyProtocol() {
+        return ProxyProtocolType.parse(PROXY.PROTOCOL.getNotNull());
+    }
+
+    static int getTimeoutDuration() {
+        return Math.max(SERVICE.TIME_OUT.getNotNull().intValue(), 100);
+    }
+
+    static long getDNSCacheDuration() {
+        return Math.max(SERVICE.DNS_CACHE_EXPIRE.getNotNull(), -1L);
+    }
 
     @HeaderComment("Debug mode for developers, with more detailed logs.")
     ConfiguredValue<Boolean> DEBUG = ConfiguredValue.of(false);
@@ -52,6 +65,16 @@ public interface Config extends Configuration {
             ConfiguredValue<String> PASSWORD = ConfiguredValue.of("proxy-password");
 
         }
+
+    }
+
+    interface ADVANCE extends Configuration {
+
+        @HeaderComment({
+                "Remove unused field after injection.",
+                "If any 'NoSuchFieldException' or 'IllegalAccessException' occurred, try to set this to false."
+        })
+        ConfiguredValue<Boolean> REMOVE_UNUSED_FILED = ConfiguredValue.of(true);
 
     }
 

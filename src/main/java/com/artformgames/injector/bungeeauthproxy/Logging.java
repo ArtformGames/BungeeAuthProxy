@@ -21,10 +21,12 @@ import java.io.StringWriter;
 import java.util.regex.Pattern;
 
 public final class Logging {
+
+    private static final String PREFIX = "BungeeAuthProxy";
+    private static final Pattern CONTROL_CHARACTERS_FILTER = Pattern.compile("\\p{Cc}&&[^\r\n\t]");
+
     private Logging() {
     }
-
-    private static final Pattern CONTROL_CHARACTERS_FILTER = Pattern.compile("\\p{Cc}&&[^\r\n\t]");
 
     public enum Level {
         DEBUG, INFO, WARNING, ERROR
@@ -53,7 +55,7 @@ public final class Logging {
     public static void log(Level level, String message, Throwable e) {
         if (level == Level.DEBUG && !Config.DEBUG.getNotNull()) return;
 
-        String log = "[BungeeAuthProxy] [" + level + "] " + message;
+        String log = "[" + PREFIX + "] [" + level + "] " + message;
         if (e != null) {
             StringWriter sw = new StringWriter();
             PrintWriter pw = new PrintWriter(sw);

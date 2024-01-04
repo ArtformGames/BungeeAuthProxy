@@ -1,6 +1,8 @@
 package com.artformgames.injector.bungeeauthproxy.handler;
 
 import com.artformgames.injector.bungeeauthproxy.Config;
+import com.artformgames.injector.bungeeauthproxy.channel.ProxiedHttpInitializer;
+import com.artformgames.injector.bungeeauthproxy.channel.ProxyProtocolType;
 import com.google.common.base.Preconditions;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
@@ -21,18 +23,19 @@ import java.util.concurrent.TimeUnit;
 
 import static com.artformgames.injector.bungeeauthproxy.Logging.debug;
 
-public class ProxiedAuthHandler {
+public class ProxiedAuthHandler implements AuthHandler {
 
     protected Cache<String, InetAddress> addressCache;
 
     public ProxiedAuthHandler() {
-        if (Config.SERVICE.DNS_CACHE_EXPIRE.getNotNull() > 0) {
+        if (Config.getDNSCacheDuration() > 0) {
             addressCache = CacheBuilder.newBuilder()
-                    .expireAfterWrite(Config.SERVICE.DNS_CACHE_EXPIRE.getNotNull(), TimeUnit.MILLISECONDS)
-                    .build();
+                    .expireAfterWrite(Config.getDNSCacheDuration(), TimeUnit.MILLISECONDS)
+                    .maximumSize(5).build();
         }
     }
 
+    @Override
     public void submit(String authURL, EventLoop loop, Callback<String> callback) throws Exception {
         URI uri = new URI(authURL);
         Preconditions.checkNotNull((Object) uri.getScheme(), "scheme");
@@ -43,14 +46,14 @@ public class ProxiedAuthHandler {
         Bootstrap bootstrap = new Bootstrap().channel(PipelineUtils.getChannel(null)).group(loop);
 
         InetAddress address = resolveAddress(uri.getHost());
-        ProxyProtocolType proxyProtocol = getProxyProtocol();
+        ProxyProtocolType proxyProtocol = Config.getProxyProtocol();
         if (proxyProtocol != null) {
             debug("Using proxy protocol [" + proxyProtocol.name() + "] for " + uri.getHost() + ":" + port);
             bootstrap.handler(new ProxiedHttpInitializer(proxyProtocol, callback, ssl, uri.getHost(), port));
         } else {
             bootstrap.handler(new HttpInitializer(callback, ssl, uri.getHost(), port));
         }
-        bootstrap.option(ChannelOption.CONNECT_TIMEOUT_MILLIS, Math.max(Config.SERVICE.TIME_OUT.getNotNull().intValue(), 100))
+        bootstrap.option(ChannelOption.CONNECT_TIMEOUT_MILLIS, Config.getTimeoutDuration())
                 .remoteAddress(address, port).connect().addListener((ChannelFutureListener) channel -> {
                     if (channel.isSuccess()) {
                         String path = uri.getRawPath() + (uri.getRawQuery() == null ? "" : "?" + uri.getRawQuery());
@@ -69,24 +72,11 @@ public class ProxiedAuthHandler {
         else return addressCache.get(host, () -> InetAddress.getByName(host));
     }
 
-    public ProxyProtocolType getProxyProtocol() {
-        return ProxyProtocolType.parse(Config.PROXY.PROTOCOL.getNotNull());
-    }
-
     private static int getPort(URI uri) {
-        int port = uri.getPort();
-        if (port != -1) return port;
-        switch (uri.getScheme()) {
-            case "http": {
-                return 80;
-            }
-            case "https": {
-                return 443;
-            }
-            default: {
-                throw new IllegalArgumentException("Unknown scheme " + uri.getScheme());
-            }
-        }
+        if (uri.getPort() != -1) return uri.getPort();
+        else if (uri.getScheme().equals("https")) return 443;
+        else if (uri.getScheme().equals("http")) return 80;
+        throw new IllegalArgumentException("Unknown scheme " + uri.getScheme());
     }
 
 }

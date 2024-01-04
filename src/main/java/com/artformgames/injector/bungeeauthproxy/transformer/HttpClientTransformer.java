@@ -1,5 +1,6 @@
 package com.artformgames.injector.bungeeauthproxy.transformer;
 
+import com.artformgames.injector.bungeeauthproxy.Config;
 import javassist.*;
 
 import java.io.ByteArrayInputStream;
@@ -10,7 +11,7 @@ import java.security.ProtectionDomain;
 import static com.artformgames.injector.bungeeauthproxy.Logging.debug;
 import static com.artformgames.injector.bungeeauthproxy.Logging.error;
 
-public class ProxyHandlerTransformer implements ClassFileTransformer {
+public class HttpClientTransformer implements ClassFileTransformer {
 
     @Override
     public byte[] transform(ClassLoader loader, String className, Class<?> classBeingRedefined,
@@ -29,14 +30,15 @@ public class ProxyHandlerTransformer implements ClassFileTransformer {
 
             handleMethod.setBody("{com.artformgames.injector.bungeeauthproxy.BungeeAuthProxy.submitRequest($1, $2, $3);}");
 
-            // remove unused static initializer
-            CtConstructor staticBlock = clazz.getClassInitializer();
-            if (staticBlock != null) clazz.removeConstructor(staticBlock);
+            if (Config.ADVANCE.REMOVE_UNUSED_FILED.getNotNull()) {
+                // remove unused static initializer
+                CtConstructor staticBlock = clazz.getClassInitializer();
+                if (staticBlock != null) clazz.removeConstructor(staticBlock);
 
-            // remove unused cache field
-            CtField cacheField = clazz.getField("addressCache");
-            clazz.removeField(cacheField);
-
+                // remove unused cache field
+                CtField cacheField = clazz.getField("addressCache");
+                clazz.removeField(cacheField);
+            }
 
             return clazz.toBytecode();
         } catch (Exception e) {

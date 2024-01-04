@@ -1,4 +1,4 @@
-package com.artformgames.injector.bungeeauthproxy.handler;
+package com.artformgames.injector.bungeeauthproxy.channel;
 
 import io.netty.handler.proxy.HttpProxyHandler;
 import io.netty.handler.proxy.ProxyHandler;

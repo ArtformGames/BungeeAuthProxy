@@ -1,8 +1,9 @@
 package com.artformgames.injector.bungeeauthproxy;
 
 import cc.carm.lib.configuration.EasyConfiguration;
+import com.artformgames.injector.bungeeauthproxy.handler.AuthHandler;
 import com.artformgames.injector.bungeeauthproxy.handler.ProxiedAuthHandler;
-import com.artformgames.injector.bungeeauthproxy.transformer.ProxyHandlerTransformer;
+import com.artformgames.injector.bungeeauthproxy.transformer.HttpClientTransformer;
 import io.netty.channel.EventLoop;
 import net.md_5.bungee.api.Callback;
 import net.md_5.bungee.http.HttpClient;
@@ -17,7 +18,7 @@ public class BungeeAuthProxy {
     private BungeeAuthProxy() {
     }
 
-    private static ProxiedAuthHandler handler;
+    private static AuthHandler handler;
 
     public static void premain(String args, Instrumentation instrumentation) {
         log(Logging.Level.INFO, "Loading auth configurations...");
@@ -25,10 +26,10 @@ public class BungeeAuthProxy {
         EasyConfiguration.from(configFileName).initialize(Config.class);
 
         log(Logging.Level.INFO, "Initializing auth handler...");
-        handler = new ProxiedAuthHandler();
+        setHandler(new ProxiedAuthHandler()); // Use ProxiedAuthHandler by default
 
         log(Logging.Level.INFO, "Registering transformer...");
-        instrumentation.addTransformer(new ProxyHandlerTransformer(), true);
+        instrumentation.addTransformer(new HttpClientTransformer(), true);
 
         log(Logging.Level.INFO, "Preload target class...");
         debug(" -> Target class: " + HttpClient.class.getName());
@@ -41,11 +42,11 @@ public class BungeeAuthProxy {
         handler.submit(url, loop, callback);
     }
 
-    public static ProxiedAuthHandler getHandler() {
+    public static AuthHandler getHandler() {
         return handler;
     }
 
-    public static void setHandler(ProxiedAuthHandler handler) {
+    public static void setHandler(AuthHandler handler) {
         BungeeAuthProxy.handler = handler;
     }
 
