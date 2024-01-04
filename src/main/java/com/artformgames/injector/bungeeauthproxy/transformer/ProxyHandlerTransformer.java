@@ -27,7 +27,7 @@ public class ProxyHandlerTransformer implements ClassFileTransformer {
             CtMethod handleMethod = clazz.getDeclaredMethod("get", new CtClass[]{stringClass, eventLoopClass, callbackClass});
             debug("Injecting into " + handleMethod.getLongName());
 
-            handleMethod.setBody("{com.artformgames.injector.bungeeauthproxy.BungeeAuthProxyInjector.submitRequest($1, $2, $3);}");
+            handleMethod.setBody("{com.artformgames.injector.bungeeauthproxy.BungeeAuthProxy.submitRequest($1, $2, $3);}");
 
             // remove unused static initializer
             CtConstructor staticBlock = clazz.getClassInitializer();

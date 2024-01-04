@@ -1,4 +1,4 @@
 Manifest-Version: 1.0
-Premain-Class: com.artformgames.injector.bungeeauthproxy.BungeeAuthProxyInjector
+Premain-Class: com.artformgames.injector.bungeeauthproxy.BungeeAuthProxy
 Can-Redefine-Classes: true
 Can-Retransform-Classes: true

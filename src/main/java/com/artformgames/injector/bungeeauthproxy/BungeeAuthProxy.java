@@ -12,9 +12,9 @@ import java.lang.instrument.Instrumentation;
 import static com.artformgames.injector.bungeeauthproxy.Logging.debug;
 import static com.artformgames.injector.bungeeauthproxy.Logging.log;
 
-public class BungeeAuthProxyInjector {
+public class BungeeAuthProxy {
 
-    private BungeeAuthProxyInjector() {
+    private BungeeAuthProxy() {
     }
 
     private static ProxiedAuthHandler handler;
@@ -46,7 +46,7 @@ public class BungeeAuthProxyInjector {
     }
 
     public static void setHandler(ProxiedAuthHandler handler) {
-        BungeeAuthProxyInjector.handler = handler;
+        BungeeAuthProxy.handler = handler;
     }
 
 }
