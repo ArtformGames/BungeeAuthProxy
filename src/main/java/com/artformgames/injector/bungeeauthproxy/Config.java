@@ -76,6 +76,12 @@ public interface Config extends Configuration {
         })
         ConfiguredValue<Boolean> REMOVE_UNUSED_FILED = ConfiguredValue.of(true);
 
+        @HeaderComment({
+                "Disable SSL verify.",
+                "If any 'SSLHandshakeException' occurred, try to set this to true."
+        })
+        ConfiguredValue<Boolean> DISABLE_SSL_VERIFY = ConfiguredValue.of(false);
+
     }
 
 
