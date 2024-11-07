@@ -28,14 +28,14 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: "Upload artifacts"
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: artifacts
           path: "**/target/"
           retention-days: 1 # 仅保留1天。
 
       - name: "Upload assets"
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: assets
           path: ".asset/"
