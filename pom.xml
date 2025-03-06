@@ -11,7 +11,7 @@
         <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
         <project.package>${project.groupId}.injector.${project.artifactId}</project.package>
 
-        <deps.easyconf.version>3.9.1</deps.easyconf.version>
+        <deps.easyconf.version>4.0.11</deps.easyconf.version>
         <deps.reflectremapper.version>0.1.0</deps.reflectremapper.version>
     </properties>
     <groupId>com.artformgames</groupId>
