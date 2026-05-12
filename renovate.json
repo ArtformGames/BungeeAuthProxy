@@ -2,5 +2,34 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:recommended"
+  ],
+  "packageRules": [
+    {
+      "description": "Automerge minor and patch updates",
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
+      ],
+      "matchCurrentVersion": "!/^0/",
+      "automerge": true
+    },
+    {
+      "description": "Automerge non-build-impact updates",
+      "matchUpdateTypes": [
+        "digest",
+        "pin",
+        "lockFileMaintenance"
+      ],
+      "automerge": true
+    },
+    {
+      "description": "Never update minecraft/spigot/bukkit related dependencies",
+      "matchPackageNames": [
+        "/.*minecraft.*/i",
+        "/.*spigot.*/i",
+        "/.*bukkit.*/i"
+      ],
+      "enabled": false
+    }
   ]
 }
